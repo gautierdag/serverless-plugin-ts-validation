@@ -1,0 +1,40 @@
+{
+  "name": "serverless-ts-validation",
+  "version": "1.0.0",
+  "description": "Validate lambdas from your Typescript sources",
+  "main": "dist/src/index.js",
+  "repository": "git@github.com:gautierdag/serverless-ts-validation.git",
+  "author": "Gautier Dagan <gautierdagan2017@u.northwestern.edu>",
+  "license": "MIT",
+  "files": [
+    "dist",
+    "package.json",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "lint": "eslint '{src,tests}/**/*.ts'"
+  },
+  "dependencies": {
+    "ts-json-schema-generator": "^0.65.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-prettier": "^3.1.2",
+    "jest": "^24.9.0",
+    "lint-staged": "^7.2.0",
+    "prettier": "^1.19.1",
+    "typescript": "^3.8.3"
+  },
+  "keywords": [
+    "serverless",
+    "serverless plugin",
+    "typescript",
+    "validation",
+    "schema",
+    "aws lambda"
+  ]
+}
