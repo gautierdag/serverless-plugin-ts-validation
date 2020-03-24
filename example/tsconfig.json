@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "lib": ["es2017"],
+        "module": "commonjs",
+        "target": "es2017",
+        "preserveConstEnums": true,
+        "strictNullChecks": true,
+        "removeComments": true,
+        "allowJs": true,
+        "moduleResolution": "node",
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "sourceMap": true,
+        "inlineSources": true,
+        "esModuleInterop": true,
+        "sourceRoot": "/",
+        "baseUrl": "./",
+    },
+    "include": ["./*.ts"],
+    "exclude": [
+        "node_modules",
+    ]
+}

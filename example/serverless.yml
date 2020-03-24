@@ -1,0 +1,34 @@
+# Welcome to Serverless!
+#
+# This file is the main config file for your service.
+# It's very minimal at this point and uses default values.
+# You can always add more config options for more control.
+# We've included some commented out config examples here.
+# Just uncomment any of them to get that config option.
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+# Happy Coding!
+
+service: example
+
+plugins:
+  - serverless-plugin-ts-validation
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+
+functions:
+  createUser:
+    handler: handler.handler
+    events:
+      - http:
+          path: users/create
+          method: get
+          request:
+            schema:
+              application/json:
+                tsPath: user.interface.ts
+                tsInterface: UserSchema
