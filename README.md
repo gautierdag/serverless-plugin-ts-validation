@@ -10,6 +10,46 @@ Under the hood it uses the `ts-json-schema-generator` library to generate a json
 
 The validation enables AWS proxy to validate the input, without needing the lambda functions to be called (saving you some money 💰) and ensuring the inputs to your functions are valid.
 
+## How to use
+
+Define a typescript interface which you would like to use as your validation:
+
+`src/user-schema.interface.ts`
+```ts
+export interface UserSchema {
+  id: number;
+  name: string;
+}
+```
+
+In your `serverless.yml`, you can add the validation as follows:
+
+```yml
+plugins:
+  - serverless-plugin-ts-validation
+
+...
+...
+...
+
+functions:
+  getUser:
+    handler: getUser.handler
+    events:
+      - http:
+          path: /user
+          method: get
+          request:
+            schema:
+              application/json:
+                tsPath: src/user-schema.interface.ts
+                tsInterface: UserSchema
+```
+
+You simply have to precise the `tsPath` and `tsInterface` to use to generate the json-schema. The parsing will be done automatically using the `ts-json-schema-generator` library. 
+
+When you then pass requests to the route `user` with a content type of `application/json` the passed body will be validated to check for the `id` and `name` attributes.
+
 ## Notes:
 
 - This currently works for simple cases, but since the json schema we create is version 7.0, and AWS only supports version 4.0, there might be cases where AWS rejects the schema generated.
