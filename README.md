@@ -1,7 +1,7 @@
 # serverless-plugin-ts-validation
 
 [![serverless](http://public.serverless.com/badges/v3.svg)](http://www.serverless.com)
-[![npm version](https://img.shields.io/npm/v/serverless-plugin-ts-validation.svg)][npm]
+![npm version](https://img.shields.io/npm/v/serverless-plugin-ts-validation.svg)
 
 This is a serverless plugin made to enable automatic validation of your AWS lambda functions from typescript interfaces.
 
