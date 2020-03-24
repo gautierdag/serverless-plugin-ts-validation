@@ -49,11 +49,11 @@ export namespace Serverless {
         [key: string]: boolean;
       };
     };
-    schema?: Schema[];
+    schema?: Schema;
   }
 
   interface Schema {
-    [key: string]: string | pluginParameters;
+    [key: string]: any | pluginParameters;
   }
 
   interface Package {

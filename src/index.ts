@@ -16,7 +16,9 @@ import { Serverless } from "./serverless";
  *           method: GET
  *           path: mypath
  *           schema:
- *             application / json: myFunc.myFuncInterface
+ *             application/json:
+ *                  tsPath: src/api/models/myFuncInterface.interface.ts
+ *                  tsInterface: myFunc.myFuncInterface
  *
  */
 export class ServerlessTSValidatorPlugin {
@@ -29,6 +31,15 @@ export class ServerlessTSValidatorPlugin {
     this.options = options;
 
     this.hooks = {
+      "before:run:run": async () => {
+        await this.generateSchemas();
+      },
+      "before:invoke:local:invoke": async () => {
+        await this.generateSchemas();
+      },
+      "before:package:createDeploymentArtifacts": async () => {
+        await this.generateSchemas();
+      },
       "before:deploy:function:packageFunction": async () => {
         await this.generateSchemas();
       }
@@ -49,29 +60,25 @@ export class ServerlessTSValidatorPlugin {
           return;
         }
 
-        // this.serverless.cli.log("Compiling with Typescript...");
-        console.log("event[http]");
-        console.log(event["http"]);
-
+        this.serverless.cli.log("Compiling with Typescript...");
         if (schemas) {
           Object.keys(schemas).forEach(schemaType => {
-            if (!("tsPath" in schemas[schemaType])) {
-              console.log("Missing tsPath");
+            // do nothing if schema is already defined (as string path or json string)
+            if (typeof schemas[schemaType] === "string") {
               return;
             }
-            if (!("tsInterface" in schemas[schemaType])) {
-              console.log("Missing tsInterface");
-              return;
+            const tsPath = schemas[schemaType]?.tsPath;
+            const tsInterface = schemas[schemaType]?.tsInterface;
+            if (tsPath === undefined || tsInterface === undefined) {
+              this.serverless.cli.log(
+                `tsPath or tsInterface missing for ${event.http.path}, schema ${schemaType}`
+              );
             }
-
-            console.log(`schemaType ${schemaType}`);
-            console.log(`${schemas[schemaType]["tsPath"]}`);
-
-            console.log("Generating Schema");
+            this.serverless.cli.log(`Generating Schema for ${tsInterface}`);
             const config = {
-              path: schemas[schemaType].tsPath, //path of .ts file
+              path: tsPath, //path of .ts file
               tsconfig: "tsconfig.json",
-              type: schemas[schemaType].tsInterface, // interface type to convert
+              type: tsInterface, // interface type to convert
               expose: "export",
               jsDoc: "extended",
               topRef: false
@@ -80,9 +87,8 @@ export class ServerlessTSValidatorPlugin {
             const generatedSchema = tsj
               .createGenerator(config)
               .createSchema(config.type);
-            console.log("Done generating schema");
-            console.log(generatedSchema);
             schemas[schemaType] = JSON.stringify(generatedSchema);
+            return;
           });
         }
       });
