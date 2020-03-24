@@ -4,6 +4,9 @@
   "description": "Validate lambdas from your Typescript sources",
   "main": "dist/src/index.js",
   "repository": "git@github.com:gautierdag/serverless-plugin-ts-validation.git",
+  "bugs": {
+    "url": "https://github.com/gautierdag/serverless-plugin-ts-validation/issues"
+  },
   "author": "Gautier Dagan <gautierdagan2017@u.northwestern.edu>",
   "license": "MIT",
   "files": [
