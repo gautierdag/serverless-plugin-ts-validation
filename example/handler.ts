@@ -6,14 +6,10 @@ export const handler = async (event: UserSchemaLamdaProxyEvent) => {
   const user: UserSchema = event.body;
   console.log(`User object passed validation: ${user}`);
   return {
-    statusCode: 200,
-    body: JSON.stringify(
-      {
-        success: true,
-        input: event
-      },
-      null,
-      2
-    )
+    statusCode: "201",
+    body: JSON.stringify({ success: true, user: user }),
+    headers: {
+      "Content-Type": "application/json"
+    }
   };
 };

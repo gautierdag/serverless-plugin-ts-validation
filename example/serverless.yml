@@ -10,7 +10,6 @@
 #    docs.serverless.com
 #
 # Happy Coding!
-
 service: example
 
 plugins:
@@ -26,7 +25,7 @@ functions:
     events:
       - http:
           path: users/create
-          method: get
+          method: post
           request:
             schema:
               application/json:
