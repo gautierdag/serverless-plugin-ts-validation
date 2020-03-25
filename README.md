@@ -17,6 +17,7 @@ The validation enables AWS proxy to validate the input, without needing the lamb
 Define a typescript interface which you would like to use as your validation:
 
 `src/user-schema.interface.ts`
+
 ```ts
 export interface UserSchema {
   id: number;
@@ -29,18 +30,18 @@ In your `serverless.yml`, you can add the validation as follows:
 ```yml
 plugins:
   - serverless-plugin-ts-validation
+---
 
-...
-...
-...
+---
 
+---
 functions:
   getUser:
     handler: getUser.handler
     events:
       - http:
           path: /user
-          method: get
+          method: post
           request:
             schema:
               application/json:
@@ -48,7 +49,7 @@ functions:
                 tsInterface: UserSchema
 ```
 
-You simply have to precise the `tsPath` and `tsInterface` to use to generate the json-schema. The parsing will be done automatically using the `ts-json-schema-generator` library. 
+You simply have to precise the `tsPath` and `tsInterface` to use to generate the json-schema. The parsing will be done automatically using the `ts-json-schema-generator` library.
 
 When you then pass requests to the route `user` with a content type of `application/json` the passed body will be validated to check for the `id` and `name` attributes.
 
