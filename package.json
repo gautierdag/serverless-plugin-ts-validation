@@ -20,7 +20,7 @@
     "lint": "eslint '{src,tests}/**/*.ts'"
   },
   "dependencies": {
-    "ts-json-schema-generator": "^0.65.0"
+    "ts-json-schema-generator": "^0.70.1"
   },
   "devDependencies": {
     "@types/jest": "^25.1.4",
